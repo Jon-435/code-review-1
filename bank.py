@@ -1,18 +1,38 @@
 import json
 import time
 
-USER_DATA_FILE = "users.json"
+USER_DB = "users.json"
 
 def load_users():
-    with open(USER_DATA_FILE, 'r') as file:
+    with open(USER_DB, 'r') as file:
         return json.load(file)
     
 def save_users(users):
-    with open(USER_DATA_FILE, 'w') as file:
+    with open(USER_DB, 'w') as file:
         json.dump(users, file, indent=4)
 
 # def hash_password(password):
 #     return hashlib.sha256(password.encode()).hexdigest()
+
+def create_account(username, password):
+    users = load_users()
+
+    if any(u['username'] == username for u in users['users']):
+        return "Username already exists"
+
+    new_user = {
+        "username": username,
+        "password": password,
+        "balance": 0.00,
+        "incorrect_attempts": 0,
+        "locked": False,
+        "last_activity": time.time()
+    }
+
+    users['users'].append(new_user)
+    save_users(users)
+
+    return "Account successfully created"
 
 def find_user(username, users):
     for user in users['users']:

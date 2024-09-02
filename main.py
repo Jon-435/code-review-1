@@ -26,6 +26,17 @@ def handle_login():
         else:
             print("Please try again")
 
+def handle_create_account():
+    while True:
+        username = input("Enter new username: ")
+        password = input("Enter new password: ")
+
+        result = bank.create_account(username, password)
+        print(result)
+
+        if "successfully created" in result:
+            return
+
 def handle_bank(username):
     if username is None:
         return
@@ -60,13 +71,17 @@ def main():
     while True:
         print("\nWelcome to Bucky's Banking")
         print("1. Login")
-        print("2. Exit")
+        print("2. Create Account")
+        print("3. Exit")
         choice = input("Choose an option: ")
 
         if choice == '1':
             username = handle_login()
-            handle_bank(username)
+            if username:
+                handle_bank(username)
         elif choice == '2':
+            handle_create_account()
+        elif choice == '3':
             break
         else:
             print("Invalid option")
