@@ -1,0 +1,20 @@
+{
+    "users": [
+        {
+            "username": "john_doe",
+            "password": "password123",
+            "balance": 5000.0,
+            "incorrect_attempts": 0,
+            "locked": false,
+            "last_activity": 0
+        },
+        {
+            "username": "jane_doe",
+            "password": "password456",
+            "balance": 3000.0,
+            "incorrect_attempts": 0,
+            "locked": false,
+            "last_activity": 0
+        }
+    ]
+}
