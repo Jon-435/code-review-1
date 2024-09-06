@@ -23,7 +23,7 @@
             "accounts": [
                 {
                     "account_number": 101,
-                    "balance": 7000.00
+                    "balance": 7000.0
                 }
             ],
             "incorrect_attempts": 0,

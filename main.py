@@ -1,5 +1,11 @@
 import os
+import getpass
+from auth import login, logout
+from umanager import create_account, add_account
 import bank
+
+def clear():
+    os.system('cls')
 
 def get_valid_amount(prompt):
     while True:
@@ -23,8 +29,8 @@ def get_valid_account(prompt):
 def handle_login():
     while True:
         username = input("Enter username: ")
-        password = input("Enter password: ")
-        result = bank.login(username, password)
+        password = getpass.getpass("Enter password: ")
+        result = login(username, password)
         print(result)
 
         if "Login successful" in result:
@@ -37,9 +43,9 @@ def handle_login():
 def handle_create_account():
     while True:
         username = input("Enter new username: ")
-        password = input("Enter new password: ")
+        password = getpass.getpass("Enter new password: ")
 
-        result = bank.create_account(username, password)
+        result = create_account(username, password)
         print(result)
 
         if "successfully created" in result:
@@ -60,36 +66,41 @@ def handle_bank(username):
         sub_choice = input("Choose an option: ")
 
         if sub_choice == '1':
-            print(bank.view_balance(username))
+            response = bank.view_balance(username)
         elif sub_choice == '2':
             amount = get_valid_amount("Enter amount to deposit: ")
             account_number = get_valid_account("Enter account number: ")
-            print(bank.deposit(username, account_number, amount))
+            response = bank.deposit(username, account_number, amount)
         elif sub_choice == '3':
             amount = get_valid_amount("Enter amount to withdraw: ")
             account_number = get_valid_account("Enter account number: ")
-            print(bank.withdraw(username, account_number, amount))
+            response = bank.withdraw(username, account_number, amount)
         elif sub_choice == '4':
             from_account = get_valid_account("Enter source account number: ")
             to_account = get_valid_account("Enter destination account number: ")
             amount = get_valid_amount("Enter amount to transfer: ")
-            print(bank.transfer(username, from_account, to_account, amount))
+            response = bank.transfer(username, from_account, to_account, amount)
         elif sub_choice == '5':
             from_account = get_valid_account("Enter source account number: ")
             to_user = input("Enter recipient username: ")
             amount = get_valid_amount("Enter amount to transfer: ")
-            print(bank.member_transfer(username, from_account, to_user, amount))
+            response = bank.member_transfer(username, from_account, to_user, amount)
         elif sub_choice == '6':
             account_number = get_valid_account("Enter new account number: ")
-            print(bank.add_account(username, account_number))
+            response = add_account(username, account_number)
         elif sub_choice == '7':
-            print(bank.logout(username))
+            response = logout(username)
             break
         else:
-            print("Invalid option")
+            response = "Invalid option"
+
+        clear()
+        print(response)
+        # input("Press Enter to continue...")
 
 def main():
     while True:
+        clear()
         print("\nWelcome to Bucky's Banking")
         print("1. Login")
         print("2. Create Account")
