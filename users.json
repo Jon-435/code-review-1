@@ -3,7 +3,16 @@
         {
             "username": "john_doe",
             "password": "password123",
-            "balance": 5000.0,
+            "accounts": [
+                {
+                    "account_number": 101,
+                    "balance": 12000.0
+                },
+                {
+                    "account_number": 111,
+                    "balance": 5000.0
+                }
+            ],
             "incorrect_attempts": 0,
             "locked": false,
             "last_activity": 0
@@ -11,7 +20,12 @@
         {
             "username": "jane_doe",
             "password": "password456",
-            "balance": 3000.0,
+            "accounts": [
+                {
+                    "account_number": 101,
+                    "balance": 7000.00
+                }
+            ],
             "incorrect_attempts": 0,
             "locked": false,
             "last_activity": 0

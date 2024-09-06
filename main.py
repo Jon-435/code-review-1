@@ -1,4 +1,4 @@
-import json
+import os
 import bank
 
 def get_valid_amount(prompt):
@@ -11,6 +11,14 @@ def get_valid_amount(prompt):
                 return amount
         except ValueError:
             print("Invalid input; amount must be numeric")
+
+def get_valid_account(prompt):
+    while True:
+        try:
+            account_number = int(input(prompt))
+            return account_number
+        except ValueError:
+            print("Invalid input; account must be numeric")
 
 def handle_login():
     while True:
@@ -46,22 +54,35 @@ def handle_bank(username):
         print("2. Deposit")
         print("3. Withdraw")
         print("4. Transfer")
-        print("5. Logout")
+        print("5. Member to Member")
+        print("6. Add New Account")
+        print("7. Logout")
         sub_choice = input("Choose an option: ")
 
         if sub_choice == '1':
             print(bank.view_balance(username))
         elif sub_choice == '2':
             amount = get_valid_amount("Enter amount to deposit: ")
-            print(bank.deposit(username, amount))
+            account_number = get_valid_account("Enter account number: ")
+            print(bank.deposit(username, account_number, amount))
         elif sub_choice == '3':
             amount = get_valid_amount("Enter amount to withdraw: ")
-            print(bank.withdraw(username, amount))
+            account_number = get_valid_account("Enter account number: ")
+            print(bank.withdraw(username, account_number, amount))
         elif sub_choice == '4':
+            from_account = get_valid_account("Enter source account number: ")
+            to_account = get_valid_account("Enter destination account number: ")
+            amount = get_valid_amount("Enter amount to transfer: ")
+            print(bank.transfer(username, from_account, to_account, amount))
+        elif sub_choice == '5':
+            from_account = get_valid_account("Enter source account number: ")
             to_user = input("Enter recipient username: ")
             amount = get_valid_amount("Enter amount to transfer: ")
-            print(bank.transfer(username, to_user, amount))
-        elif sub_choice == '5':
+            print(bank.member_transfer(username, from_account, to_user, amount))
+        elif sub_choice == '6':
+            account_number = get_valid_account("Enter new account number: ")
+            print(bank.add_account(username, account_number))
+        elif sub_choice == '7':
             print(bank.logout(username))
             break
         else:
